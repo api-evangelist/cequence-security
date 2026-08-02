@@ -1,0 +1,90 @@
+generated: '2026-08-02'
+method: searched
+source: https://helpdesk.cequence.ai/hc/en-us/articles/34708505561495-Latest-Releases
+versioning:
+  uap_platform:
+    scheme: semver-major-minor
+    current_release: '9.1'
+    ga_date: '2026-07-15'
+    notes: >-
+      The Unified API Protection platform ships on a numbered release train (7.1 -> 9.1 observed).
+      Release 9.0 required a fresh installation ("Release 9.0 is intended for new customers and
+      requires a fresh installation"); 9.1 is the first release most 8.x customers upgrade into.
+  component_releases:
+    source: https://helpdesk.cequence.ai/hc/en-us/articles/34708505561495-Latest-Releases
+    observed: '2026-06-15'
+    components:
+    - {name: Unified API Protection (UAP) platform, release: '9.0'}
+    - {name: Bridge, release: 6.0.3}
+    - {name: Defender, release: 6.3.0}
+    - {name: eBPF Sensor, release: '2.0'}
+    - {name: Network Sensor, release: 5.1.1}
+    - {name: Honeytrap, release: 4.8.0}
+  ai_gateway:
+    scheme: continuous-saas
+    notes: No public version identifier or version segment is documented for the AI Gateway.
+api_specification:
+  uap_api_security_openapi:
+    published: true
+    public: false
+    since: UAP 9.0
+    quote: >-
+      "A published, versioned OpenAPI specification for the API Security component is now available
+      directly from the product and kept in sync with each release."
+    stated_benefits:
+    - third-party integrations with any tool that can consume an OpenAPI spec
+    - custom automation workflows with a stable documented contract
+    - predictable versioning so integrations built against one release keep working
+    note: >-
+      The specification is delivered from inside the deployed product, not from a public URL. No
+      anonymous OpenAPI/Swagger document was reachable on any Cequence host (see openapi_discovery).
+changelog:
+  index_url: https://helpdesk.cequence.ai/hc/en-us/articles/34708505561495-Latest-Releases
+  structured: changelog/cequence-security-changelog.yml
+upgrade_guidance:
+  documented: true
+  examples:
+  - {title: Cequence UAP 8.x to 9.x upgrade and rollback, url: 'https://helpdesk.cequence.ai/hc/en-us/articles/41989676013079-Cequence-UAP-8-x-to-9-x-upgrade-and-rollback'}
+  - {title: Cequence UAP 8.2.x to 8.4.x upgrade and rollback, url: 'https://helpdesk.cequence.ai/hc/en-us/articles/38119169054999-Cequence-UAP-8-2-x-to-8-4-x-upgrade-and-rollback'}
+  note: Rollback procedures are documented per upgrade path, but this is release engineering, not an API deprecation policy.
+deprecation:
+  policy_documented: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  notes: >-
+    No public API deprecation or sunset policy (RFC 8594 Sunset / Deprecation headers) was located on
+    cequence.ai, the AI Gateway docs, or the helpdesk. Release notes describe removed/renamed features
+    per release but do not constitute a published deprecation policy, so no `Deprecation` pointer is
+    wired.
+status_page:
+  published: false
+  probes:
+  - {url: 'https://status.cequence.ai/', result: DNS does not resolve}
+  notes: >-
+    No public status page was found; support and incident handling run through the Zendesk helpdesk at
+    helpdesk.cequence.ai. No `StatusPage` pointer is wired.
+sla:
+  documented: false
+  notes: Service levels are contractual (enterprise EULA), not published.
+support:
+  channel: https://helpdesk.cequence.ai/hc/en-us
+  security_contact: security@cequence.ai
+openapi_discovery:
+  result: none-public
+  probed:
+  - {url: 'https://api.cequence.ai/', result: DNS does not resolve}
+  - {url: 'https://api.aigateway.cequence.ai/openapi.json', http_status: 404}
+  - {url: 'https://aigateway.cequence.ai/openapi.json', http_status: 200, verdict: 'SPA catch-all — text/html shell, identical byte size to every other path; not a spec'}
+  - {url: 'https://docs.aigateway.cequence.ai/openapi.json', http_status: 200, verdict: 'docs shell HTML, not a spec'}
+  - {url: 'https://docs.cequence.ai/', result: DNS does not resolve}
+  - {url: 'https://developer.cequence.ai/', result: DNS does not resolve}
+x-evidence:
+  fetched: '2026-08-02'
+  urls:
+  - url: https://helpdesk.cequence.ai/hc/en-us/articles/34708505561495-Latest-Releases
+    http_status: 200
+  - url: https://helpdesk.cequence.ai/hc/en-us/articles/41989542734615-Cequence-UAP-9-1-release-notes
+    http_status: 200
+  - url: https://helpdesk.cequence.ai/hc/en-us/articles/41160348102551-Cequence-UAP-9-0-release-note
+    http_status: 200

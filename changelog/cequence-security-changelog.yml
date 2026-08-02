@@ -1,0 +1,106 @@
+generated: '2026-08-02'
+method: searched
+source: https://helpdesk.cequence.ai/hc/en-us/articles/34708505561495-Latest-Releases
+docs: https://helpdesk.cequence.ai/hc/en-us
+scheme: dated product release notes, one knowledge-base article per platform release
+product: Cequence Unified API Protection (UAP) platform
+current_version: '9.1'
+current_version_ga: '2026-07-15'
+window: recent releases only (8.x and 9.x); the article set goes back to release 7.1 (2024-07-26)
+entries:
+- version: '9.1'
+  date: '2026-07-15'
+  title: Cequence UAP 9.1 release notes
+  url: https://helpdesk.cequence.ai/hc/en-us/articles/41989542734615-Cequence-UAP-9-1-release-notes
+  breaking: false
+  highlights:
+  - Refines the inventory and risk-scoring engine introduced in 9.0.
+  - >-
+    Stricter default standard for Undocumented and Shadow endpoints — only 2xx or 3xx response codes
+    qualify an endpoint for inventory, keeping scanners and probes off the inventory count. Documented
+    (spec-matched) endpoints are unaffected.
+  - More direct administrator control over managing risk rules and issues.
+  - Finer-grained access control for Risk Posture data.
+  notes: Most customers upgrading to 9.1 come directly from 8.x rather than from 9.0.
+- version: '9.0'
+  date: '2026-06-11'
+  title: Cequence UAP 9.0 release note
+  url: https://helpdesk.cequence.ai/hc/en-us/articles/41160348102551-Cequence-UAP-9-0-release-note
+  current_patch: 9.0.1
+  breaking: true
+  breaking_note: >-
+    "Release 9.0 is intended for new customers and requires a fresh installation." Upgrade paths for
+    existing customers were deferred to a later release.
+  additions:
+  - Active endpoint ceiling raised to two million with sub-five-second load times across all views.
+  - >-
+    Published, versioned OpenAPI specification for the API Security component, available from inside
+    the product and kept in sync with each release (enables third-party integrations and stable
+    automation contracts).
+  - Compliance-ready risk rules available on day one.
+  - Built-in AI Assistant and MCP server.
+  - Updated product terminology.
+- version: '8.7'
+  date: '2026-06-23'
+  title: Cequence UAP 8.7 release notes
+  url: https://helpdesk.cequence.ai/hc/en-us/articles/41435857917463-Cequence-UAP-8-7-release-notes
+  current_patch: 8.7.2
+  breaking: false
+  highlights:
+  - Stabilizes the Mitigation Policies experience and Challenge Templates (import/edit defects fixed).
+  - Global policies no longer cleared when flushing the mitigation cache.
+  - Reporting hardened with append-only writes and recovery from stale GENERATING states.
+  - Fixes for dashboard time filters, premature session logouts, Airflow DAG paths and IPVS connection resets.
+- version: '8.6'
+  date: '2026-06-09'
+  title: Cequence UAP 8.6 release notes
+  url: https://helpdesk.cequence.ai/hc/en-us/articles/41073894258327-Cequence-UAP-8-6-release-notes
+  current_patch: 8.6.4
+  breaking: false
+  additions:
+  - New Usage Dashboard for all tenants (no entitlement gating) with multi-window trend analysis.
+  - >-
+    Detection rules library expansion — February 2026 rules bundle, Bot Analyzer rules R301-R312,
+    re-enabled R205 and R58, and agentic detection rules covering the x402 protocol and Google UCP
+    (R313-R316).
+  - Security hardening: self-signed certificates disabled in Kibana by default, hardened Airflow constraints, hardened Helm security contexts for sde-service.
+  - Dependency upgrades — Strimzi 0.44.0 to 0.45.2, Kafka 3.7.0 to 3.9.1; Defender bridge to 6.1.0.
+- version: '8.5'
+  date: '2026-05-07'
+  title: Cequence UAP platform release 8.5
+  url: https://helpdesk.cequence.ai/hc/en-us/articles/40315644324887-Cequence-UAP-platform-release-8-5
+- version: '8.4'
+  date: '2026-02-03'
+  title: Cequence UAP platform release 8.4
+  url: https://helpdesk.cequence.ai/hc/en-us/articles/38118555835671-Cequence-UAP-platform-release-8-4
+- version: '8.3'
+  date: '2026-01-23'
+  title: Cequence UAP platform release 8.3
+  url: https://helpdesk.cequence.ai/hc/en-us/articles/37900777841559-Cequence-UAP-platform-release-8-3
+- version: '8.2'
+  date: '2025-12-04'
+  title: Cequence UAP platform release 8.2
+  url: https://helpdesk.cequence.ai/hc/en-us/articles/36792891167895-Cequence-UAP-platform-release-8-2
+- version: '8.1'
+  date: '2025-09-03'
+  title: Cequence UAP platform release 8.1
+  url: https://helpdesk.cequence.ai/hc/en-us/articles/34682887183383-Cequence-UAP-platform-release-8-1
+- version: '8.0'
+  date: '2025-07-03'
+  title: Cequence UAP platform release 8.0
+  url: https://helpdesk.cequence.ai/hc/en-us/articles/33237767969815-Cequence-UAP-platform-release-8-0
+ai_gateway_changelog:
+  published: false
+  note: >-
+    The AI Gateway documentation site publishes no changelog or release-notes page; /docs/changelog and
+    /docs/release-notes return the Docusaurus SPA shell and are absent from sitemap.xml.
+x-evidence:
+  fetched: '2026-08-02'
+  method_note: >-
+    Article titles, dates and bodies harvested from the public Zendesk Help Center API at
+    helpdesk.cequence.ai/api/v2/help_center/ (anonymous, 200).
+  urls:
+  - url: https://helpdesk.cequence.ai/api/v2/help_center/articles/search.json?query=release
+    http_status: 200
+  - url: https://helpdesk.cequence.ai/api/v2/help_center/en-us/articles/34708505561495.json
+    http_status: 200

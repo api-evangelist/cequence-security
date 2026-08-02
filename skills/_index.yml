@@ -1,0 +1,30 @@
+generated: '2026-08-02'
+method: generated
+source: >-
+  Grounded in the tool names published on
+  https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/cequence-ai-gateway (captured verbatim in
+  mcp/cequence-security-mcp.yml) plus the AI Gateway guides for authentication, security policies and
+  observability.
+grounding: mcp-tools
+grounding_note: >-
+  Cequence publishes no public OpenAPI, so these skills are grounded in the REAL, documented MCP tool
+  names of the first-party Cequence AI Gateway MCP server rather than operationIds. No tool name,
+  parameter or endpoint here is invented. Input schemas are NOT reproduced — the live endpoint is
+  tenant-scoped and OAuth-gated, so parameter shapes require authenticated tools/list introspection.
+prerequisites:
+- A Cequence AI Gateway tenant; the first-party MCP server is provisioned automatically.
+- The tenant-specific MCP server URL, copied from the server's details page in the AI Gateway UI.
+- An OAuth 2.0 browser authorization (public-client PKCE) against the AI Gateway account.
+skills:
+- name: publish-rest-api-as-governed-mcp
+  file: cequence-security-publish-rest-api-as-governed-mcp.md
+  description: Turn a registered REST API into a governed MCP server and confirm its published tools.
+  tools: [list_api_specs, get_api_spec, list_apis, get_api_registry, create_mcp_server, list_mcp_servers, list_tools_for_mcp_server, list_pools]
+- name: govern-agent-persona-with-dlp
+  file: cequence-security-govern-agent-persona-with-dlp.md
+  description: Compose an agent persona across MCP servers and attach a least-privilege DLP policy.
+  tools: [list_mcp_servers, list_tools_for_mcp_server, list_teams, list_skills, get_skill, create_agent_persona, update_agent_persona, get_agent_persona, list_sdp_categories, list_dlp_policies, recommend_dlp_policy, attach_dlp_policy]
+- name: audit-agent-tool-activity
+  file: cequence-security-audit-agent-tool-activity.md
+  description: Investigate agent tool activity — denials, rate limiting, DLP findings — from the audit log.
+  tools: [query_tool_activity, list_mcp_servers, list_agent_personas, get_agent_persona, list_dlp_policies]

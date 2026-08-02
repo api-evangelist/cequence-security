@@ -1,0 +1,82 @@
+generated: '2026-08-02'
+method: searched
+source: https://docs.aigateway.cequence.ai/docs/guides/security-policies + https://docs.aigateway.cequence.ai/docs/guides/observability
+format: http-status
+format_note: >-
+  Cequence does not document an RFC 9457 application/problem+json envelope for the AI Gateway. Failures
+  surface to the agent as an HTTP status plus a human-readable error message, and are simultaneously
+  written to the audit log with a machine-readable `action.reason`. This catalog is therefore keyed on
+  the documented enforcement stage + audit reason, not on a published problem-type URI registry.
+enforcement_pipeline:
+- {stage: 1, name: Routing, status: 404, meaning: Not Found — no matching MCP server or tool}
+- {stage: 2, name: Authentication, status: 401, meaning: Unauthorized — inbound credential missing or invalid}
+- {stage: 3, name: Authorization, status: 403, meaning: Forbidden — caller not permitted for this tool/persona/team}
+- {stage: 4, name: Rate limiting, status: 429, meaning: Too Many Requests — per-tool rolling-window limit exceeded}
+- {stage: 5, name: Security interceptors (DLP, behavioral rules), status: varies, meaning: Request or response blocked or redacted by policy}
+- {stage: 6, name: Upstream call, status: 502/503, meaning: Bad Gateway / Service Unavailable on upstream failure or open circuit breaker}
+problem_types:
+- id: auth_denied
+  http_status: 401
+  title: Authentication denied
+  detail: Inbound agent authentication failed (SSO, JWT validation, API key, bearer or basic).
+  remediation: Re-run the SSO/OAuth connect flow, or check the configured key/token for the MCP client.
+  source: audit event reason
+- id: access_control_denied
+  http_status: 403
+  title: Access control denied
+  detail: The authenticated caller is not authorized for this tool, MCP server, persona or team.
+  remediation: Grant the tool/endpoint to the persona, or add the user's SSO group to the Team.
+  source: audit event reason
+- id: rate_limit_exceeded
+  http_status: 429
+  title: Rate limit exceeded
+  detail: The per-tool rolling-window limit was exceeded.
+  remediation: Retry after the time window resets, or raise Max Requests / Time Window for the tool.
+  source: audit event reason
+  see: rate-limits/cequence-security-rate-limits.yml
+- id: circuit_breaker_open
+  http_status: 503
+  title: Circuit breaker open
+  detail: Traffic to the upstream is temporarily halted after repeated failures; automatic recovery testing runs.
+  remediation: Restore upstream health; the breaker closes automatically on successful probes.
+  source: audit event reason
+- id: upstream_error
+  http_status: 502
+  title: Upstream error
+  detail: The upstream API or remote MCP server returned an error or was unreachable.
+  remediation: Check upstream availability and network egress policy for the deployment pool.
+  source: audit event reason
+- id: outbound_auth_failed
+  http_status: 502
+  title: Outbound authentication failed
+  detail: The credential the gateway injects toward the upstream was rejected (expired OAuth token, revoked API key, bad client credentials).
+  remediation: Reconnect the app authorization or rotate the stored credential in the gateway.
+  source: audit event reason
+- id: routing_not_found
+  http_status: 404
+  title: Not found
+  detail: No MCP server or tool matched the request path.
+  remediation: Verify the tenant-specific server URL and that the tool is published on that server.
+  source: enforcement pipeline stage 1
+tool_activity_status_values: [success, error, blocked, rate_limited]
+operational_event_types:
+- auth_denied
+- access_control_denied
+- rate_limit_exceeded
+- circuit_breaker_open
+- upstream_error
+- outbound_auth_failed
+- config_change
+- component_lifecycle
+- reconciliation_complete
+gaps:
+- No published error-code registry with stable machine-readable codes.
+- No application/problem+json (RFC 9457) envelope documented.
+- Upstream-native error bodies are proxied; their shape is the upstream provider's, not Cequence's.
+x-evidence:
+  fetched: '2026-08-02'
+  urls:
+  - url: https://docs.aigateway.cequence.ai/docs/guides/security-policies
+    http_status: 200
+  - url: https://docs.aigateway.cequence.ai/docs/guides/observability
+    http_status: 200

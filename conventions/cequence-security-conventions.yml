@@ -1,0 +1,103 @@
+generated: '2026-08-02'
+method: searched
+source: >-
+  https://docs.aigateway.cequence.ai/docs/api-registry +
+  https://docs.aigateway.cequence.ai/docs/guides/multi-authentication +
+  https://docs.aigateway.cequence.ai/docs/guides/security-policies +
+  https://docs.aigateway.cequence.ai/docs/guides/observability
+summary: >-
+  Cross-cutting runtime semantics for the Cequence AI Gateway, captured from the published docs. The
+  gateway is a governed MCP front door: it terminates agent authentication, applies authorization,
+  rate limiting and DLP, injects upstream credentials, and audits every tool call. Idempotency is NOT
+  documented — do not assume it.
+surface:
+  primary: Model Context Protocol (streamable HTTP)
+  secondary: REST APIs registered from OpenAPI/Swagger specs and re-published as MCP tools
+  no_public_rest_api: >-
+    Cequence publishes no public REST API of its own for the AI Gateway control plane; the equivalent
+    surface is the first-party hosted MCP server (see mcp/cequence-security-mcp.yml).
+authentication:
+  styles: [openid_connect_sso, oauth2_authorization_code, oauth2_client_credentials, api_key, bearer, jwt_bearer, basic, passthrough]
+  broker_model: two-sided (inbound agent auth + outbound app auth); credentials are never exposed to the agent
+  see: authentication/cequence-security-authentication.yml
+authorization:
+  model: >-
+    Least-privilege endpoint/tool selection at registration time, narrowed again per Agent Persona;
+    Teams map SSO groups onto MCP servers and personas.
+  quote: >-
+    "Only select the endpoints your agents will actually use. You can always register more later, and
+    each persona can be granted an even narrower subset."
+idempotency:
+  documented: false
+  header: null
+  notes: >-
+    No idempotency key, retry-safety contract or replay window is documented for the AI Gateway. Tool
+    calls inherit whatever idempotency the upstream API provides. Agents should treat write tools
+    (create_mcp_server, create_agent_persona, create_skill, attach_dlp_policy) as non-idempotent.
+pagination:
+  documented: false
+  notes: >-
+    No gateway-level pagination convention is published; list tools proxy the upstream/control-plane
+    result sets.
+rate_limiting:
+  model: per-tool rolling window with method-derived defaults
+  exceeded: HTTP 429 + audit reason rate_limit_exceeded
+  see: rate-limits/cequence-security-rate-limits.yml
+error_envelope:
+  style: http-status + human-readable message + machine-readable audit reason
+  problem_json: false
+  see: errors/cequence-security-problem-types.yml
+request_tracing:
+  fields: [request.id, session_id, timestamp]
+  notes: Every tool activity event carries a Request ID and Session ID.
+observability:
+  audit_event_fields:
+  - timestamp
+  - request.id
+  - tool.name
+  - mcp.server_name
+  - user.email
+  - client.ip
+  - status
+  - action
+  - action.reason
+  - duration.total_ms
+  - duration.upstream_ms
+  - http.status_code
+  status_values: [success, error, blocked, rate_limited]
+  siem_export:
+  - {destination: Splunk, protocol: HTTP Event Collector (HEC)}
+  - {destination: Datadog, protocol: Datadog API}
+  - {destination: OTLP, protocol: OpenTelemetry Protocol (gRPC or HTTP)}
+  - {destination: Syslog, protocol: TCP, UDP, or TLS}
+  webhooks: >-
+    No webhook or push-callback surface is documented; event delivery is SIEM export only, so no
+    Webhooks/AsyncAPI artifact is emitted.
+data_protection:
+  dlp: Sensitive-data-protection categories and DLP policies, attachable per Agent Persona, with redaction.
+  recommendation_tool: recommend_dlp_policy (deterministic)
+  network_policy: Egress control per deployment pool; cell-based isolation tiers (Critical / Standard / Experimental) in private-cloud deployments.
+spec_ingestion:
+  accepted_formats: [OpenAPI, Swagger, YAML, JSON, WSDL, XML]
+  max_size: 25 MB
+  base_url: 'Operator selects the base URL — "the address the gateway will call".'
+versioning:
+  gateway: Continuous SaaS; no public API version segment documented.
+  uap_platform: See lifecycle/cequence-security-lifecycle.yml for the UAP release train.
+cross_links:
+  authentication: authentication/cequence-security-authentication.yml
+  errors: errors/cequence-security-problem-types.yml
+  rate_limits: rate-limits/cequence-security-rate-limits.yml
+  lifecycle: lifecycle/cequence-security-lifecycle.yml
+  mcp: mcp/cequence-security-mcp.yml
+x-evidence:
+  fetched: '2026-08-02'
+  urls:
+  - url: https://docs.aigateway.cequence.ai/docs/api-registry
+    http_status: 200
+  - url: https://docs.aigateway.cequence.ai/docs/guides/multi-authentication
+    http_status: 200
+  - url: https://docs.aigateway.cequence.ai/docs/guides/security-policies
+    http_status: 200
+  - url: https://docs.aigateway.cequence.ai/docs/guides/observability
+    http_status: 200

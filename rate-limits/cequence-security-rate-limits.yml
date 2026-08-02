@@ -1,0 +1,51 @@
+generated: '2026-08-02'
+method: searched
+source: https://docs.aigateway.cequence.ai/docs/guides/security-policies
+summary: >-
+  Rate limits in the Cequence AI Gateway are configured per tool on an MCP server, on a rolling window.
+  Administrators set Max Requests (1 to 1,000,000) and a Time Window (1 second to 24 hours). When rate
+  limiting is enabled without explicit per-tool overrides, method-derived defaults apply.
+model: per-tool, rolling-window
+configurable:
+  max_requests: {min: 1, max: 1000000}
+  time_window: {min: 1 second, max: 24 hours}
+rate_limits:
+- name: Read methods default
+  applies_to: GET, HEAD, OPTIONS
+  limit_count: 1000
+  limit_period: 1 hour
+  scope: per tool
+- name: Write methods default
+  applies_to: POST, PUT, PATCH
+  limit_count: 100
+  limit_period: 1 hour
+  scope: per tool
+- name: Delete methods default
+  applies_to: DELETE
+  limit_count: 10
+  limit_period: 1 hour
+  scope: per tool
+exceeded_behavior:
+  http_status: 429
+  status_text: Too Many Requests
+  agent_message: Error message indicating the limit was exceeded.
+  audit_reason: rate_limit_exceeded
+  retry: Agent can retry after the time window resets.
+headers:
+  documented: false
+  note: >-
+    No RateLimit / X-RateLimit response header set is documented; the signal to the agent is the 429
+    status plus the error message.
+circuit_breaking:
+  enabled: true
+  behavior: >-
+    Automatically halts traffic to an unresponsive upstream (503 response) when failures are detected,
+    with automatic recovery testing.
+related:
+  errors: errors/cequence-security-problem-types.yml
+  conventions: conventions/cequence-security-conventions.yml
+x-evidence:
+  fetched: '2026-08-02'
+  urls:
+  - url: https://docs.aigateway.cequence.ai/docs/guides/security-policies
+    http_status: 200

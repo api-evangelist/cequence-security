@@ -1,0 +1,86 @@
+generated: '2026-08-02'
+method: searched
+source: https://registry.npmjs.org/ + https://docs.aigateway.cequence.ai/docs/getstarted
+summary: >-
+  Cequence publishes its client tooling to npm under the first-party @cequenceai scope. The AI Gateway
+  getting-started docs invoke it directly (npx @cequenceai/mcp-cli@latest introspect ...), which is the
+  evidence for first-party status. No Python, Java, Go, Ruby, PHP or Rust client libraries were found
+  in PyPI, Maven Central, pkg.go.dev, RubyGems, Packagist or crates.io.
+packages:
+- language: javascript
+  registry: npm
+  name: '@cequenceai/mcp-cli'
+  url: https://www.npmjs.com/package/@cequenceai/mcp-cli
+  version: 1.5.0
+  license: MIT
+  official: true
+  kind: cli
+  bin: cequence-mcp
+  engines: {node: '>=18.0.0'}
+  first_published: '2025-07-01'
+  last_published: '2026-07-09'
+  release_count: 48
+  description: >-
+    "Cequence MCP CLI - Command-line tool for setting up Cequence MCP servers with AI clients"
+  dependencies: ['@modelcontextprotocol/sdk', commander, inquirer, chalk, ora, fs-extra, os-homedir]
+  declared_repository: https://github.com/cequence-io/mcp-api-gateway (directory cli) — returns 404 anonymously (not public)
+  evidence: >-
+    Referenced verbatim in Cequence's own docs — "npx @cequenceai/mcp-cli@latest introspect --url
+    ... --auth oauth" on https://docs.aigateway.cequence.ai/docs/getstarted — and the package README
+    opens "A command-line tool by Cequence Security".
+- language: javascript
+  registry: npm
+  name: '@cequenceai/mcp-stdio'
+  url: https://www.npmjs.com/package/@cequenceai/mcp-stdio
+  version: 1.0.0
+  license: MIT
+  official: true
+  kind: bridge
+  first_published: '2025-07-09'
+  last_published: '2025-07-09'
+  description: >-
+    "Cequence MCP stdio bridge - Bridges MCP protocol from stdio to HTTP for Cequence MCP servers"
+  declared_repository: https://github.com/cequence-io/mcp-api-gateway (directory cli-stdio) — 404 anonymously
+- language: javascript
+  registry: npm
+  name: cequence-mcp-cli
+  url: https://www.npmjs.com/package/cequence-mcp-cli
+  version: 1.0.4
+  official: true
+  kind: cli
+  status: superseded
+  first_published: '2025-07-01'
+  description: >-
+    Unscoped predecessor of @cequenceai/mcp-cli, same description and declared repository. Superseded
+    by the scoped package; recorded for completeness, do not recommend.
+source_code:
+- name: cequenceai (GitHub organization)
+  url: https://github.com/cequenceai
+  official: true
+  public_repos:
+  - {name: aigateway-agents, language: Python, url: 'https://github.com/cequenceai/aigateway-agents', description: 'Cequence AI Gateway Agent Examples'}
+  - {name: oauth-test, language: HTML, url: 'https://github.com/cequenceai/oauth-test', description: 'A simple Flask application to test and debug OAuth 2.0 authorization code flows step by step.'}
+  - {name: icap, language: Go, url: 'https://github.com/cequenceai/icap', description: ''}
+  note: >-
+    These are example/utility repos, not distributed client SDKs. NOTE — the unrelated GitHub org
+    github.com/cequence-io ("Cequence - the future of contracting", cequence.io) is a DIFFERENT
+    company; its Scala libraries (openai-scala-client, pinecone-scala, io.cequence on Maven Central)
+    must NOT be attributed to Cequence Security.
+registries_checked:
+  npm: hit (3 packages)
+  pypi: miss
+  maven_central: 'miss for Cequence Security (io.cequence artifacts belong to cequence.io, a different company)'
+  nuget: miss
+  pkg_go_dev: miss
+  rubygems: miss
+  packagist: miss
+  crates_io: miss
+x-evidence:
+  fetched: '2026-08-02'
+  urls:
+  - url: https://registry.npmjs.org/-/v1/search?text=cequence
+    http_status: 200
+  - url: https://registry.npmjs.org/@cequenceai/mcp-cli
+    http_status: 200
+  - url: https://github.com/cequence-io/mcp-api-gateway
+    http_status: 404

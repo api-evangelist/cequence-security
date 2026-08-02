@@ -1,0 +1,98 @@
+# Cequence AI Gateway
+
+> Enterprise AI Gateway making applications agent-ready through secure MCP integration.
+
+Cequence AI Gateway enables enterprises to safely connect AI agents to business applications using the Model Context Protocol (MCP). It provides enterprise-grade security, OAuth authentication, comprehensive monitoring, and zero-trust architecture for agentic AI productivity.
+
+## Getting Started
+- [Introduction](https://docs.aigateway.cequence.ai/docs/introduction): Overview of AI Gateway capabilities and architecture
+- [Getting Started](https://docs.aigateway.cequence.ai/docs/getstarted): Quick start guide for launching your first MCP server
+- [Administration](https://docs.aigateway.cequence.ai/docs/administration): Administrative configuration and management
+- [Agent Personas](https://docs.aigateway.cequence.ai/docs/agent-personas): Build AI agents that combine tools from multiple MCP servers into a single endpoint with SSO and access key authentication
+- [Teams](https://docs.aigateway.cequence.ai/docs/teams): Control access to MCP servers and Agent Personas using SSO group-based teams
+- [Skill Registry](https://docs.aigateway.cequence.ai/docs/skill-registry): Register reusable Agent Skills (SKILL.md) that agents discover and load on demand, and attach them to Agent Personas
+- [API Registry](https://docs.aigateway.cequence.ai/docs/api-registry): Register REST APIs from their OpenAPI specs so agents can call selected endpoints through the gateway with governed authentication, DLP, rate limiting, and audit
+- [Private Cloud Deployment](https://docs.aigateway.cequence.ai/docs/private-cloud-deployment): Deploy the AI Gateway Operator and Armor gateway to your Kubernetes clusters, including cell-based isolation (Critical / Standard / Experimental tiers) for blast-radius separation
+
+## Client Configuration
+- [Client Configuration Overview](https://docs.aigateway.cequence.ai/docs/client-config/): How to connect AI clients to AI Gateway
+- [Claude Desktop](https://docs.aigateway.cequence.ai/docs/client-config/claude-desktop): Configure MCP with Claude Desktop app
+- [Claude Code](https://docs.aigateway.cequence.ai/docs/client-config/claude-code): Configure MCP with Claude Code CLI
+- [Cursor IDE](https://docs.aigateway.cequence.ai/docs/client-config/cursor): Integrate with Cursor IDE
+- [VS Code](https://docs.aigateway.cequence.ai/docs/client-config/vscode): Configure MCP in Visual Studio Code
+- [Windsurf](https://docs.aigateway.cequence.ai/docs/client-config/windsurf): Set up Windsurf IDE integration
+
+## SSO & Identity Management
+- [SSO for MCP Overview](https://docs.aigateway.cequence.ai/docs/sso-mcp): Single sign-on configuration for MCP servers
+- [Microsoft Entra ID Overview](https://docs.aigateway.cequence.ai/docs/sso-mcp/microsoft-entra-overview): Azure AD/Entra ID SSO overview
+- [Microsoft Entra ID](https://docs.aigateway.cequence.ai/docs/sso-mcp/microsoft-entra): Azure AD/Entra ID SSO configuration
+- [Microsoft Entra Proxy](https://docs.aigateway.cequence.ai/docs/sso-mcp/microsoft-entra-proxy): Entra ID proxy configuration
+- [Google Workspace SSO](https://docs.aigateway.cequence.ai/docs/sso-mcp/google-workspace): Google Workspace identity integration
+- [Okta SSO](https://docs.aigateway.cequence.ai/docs/sso-mcp/okta): Okta identity provider integration
+- [GitLab SSO](https://docs.aigateway.cequence.ai/docs/sso-mcp/gitlab-sso-configuration): GitLab single sign-on setup
+
+## Advanced Guides
+- [Create Custom MCP Server](https://docs.aigateway.cequence.ai/docs/guides/create-custom-mcp): Build custom MCP integrations
+- [Create Third-Party MCP](https://docs.aigateway.cequence.ai/docs/guides/create-third-party-mcp): Integrate third-party MCP servers
+- [Atlassian OAuth Scopes](https://docs.aigateway.cequence.ai/docs/guides/atlassian-oauth-scopes): OAuth configuration for Atlassian products
+- [Authentication for MCP Servers](https://docs.aigateway.cequence.ai/docs/guides/multi-authentication): Configure agent and app authentication with SSO, OAuth, API keys, and additional outbound headers
+- [Rate Limiting & Security](https://docs.aigateway.cequence.ai/docs/guides/security-policies): Configure per-tool rate limits and security enforcement policies
+- [Observability & SIEM](https://docs.aigateway.cequence.ai/docs/guides/observability): Monitor agent activity, export audit events, and track pool health
+
+## AI Libraries & Frameworks
+- [Agent Libraries Overview](https://docs.aigateway.cequence.ai/docs/ai-libraries): AI framework integrations
+- [LangGraph](https://docs.aigateway.cequence.ai/docs/ai-libraries/langgraph): LangGraph framework integration
+- [CrewAI](https://docs.aigateway.cequence.ai/docs/ai-libraries/crewai): CrewAI multi-agent orchestration
+
+## AI Discovery
+- [Set Up Splunk Data Source Connector for AI Discovery](https://docs.aigateway.cequence.ai/docs/ai-discovery/splunk-setup): Configure Splunk Enterprise or Splunk Cloud so AI Gateway's AI Discovery can query Palo Alto NGFW logs over the Splunk REST API — REST access, a least-privilege bearer token, the Palo Alto index and sourcetypes, and optional URL Filtering, decryption, and User-ID enrichment
+
+## Remote MCP Servers
+- [Cequence AI Gateway MCP](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/cequence-ai-gateway): First-party, Cequence-hosted MCP server to manage the AI Gateway from any agent — create MCP servers, agent personas, skills, and DLP policies; provisioned automatically for every tenant
+- [Atlassian MCP](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/atlassian): Atlassian remote MCP server integration
+- [Backlog MCP](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/backlog): Self-hosted Nulab Backlog MCP for projects, issues, wikis, Git, and pull requests
+- [Braintrust MCP](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/braintrust): Query Braintrust experiments, datasets, prompts, playgrounds, and production logs (OAuth DCR or API key)
+- [Canva MCP](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/canva): Design creation, AI generation, and asset management MCP
+- [Rilo MCP](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/rilo): GTM infrastructure for AI agents — LinkedIn lead search, enrichment, sequences, and outreach
+- [Cloudflare AI Gateway](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/cloudflare-ai-gateway): Cloudflare AI Gateway MCP
+- [Notion](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/notion): Workspace and documentation MCP
+- [Sentry](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/sentry): Error monitoring MCP
+- [Statsig MCP](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/statsig): Feature flags, experiments, and product analytics MCP
+- [Linear](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/linear): Project management MCP
+- [Monday MCP](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/monday): monday.com work management MCP
+- [Wix](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/wix): Wix platform MCP
+- [Zoom MCP](https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/zoom): Official Zoom remote MCP for meetings, recordings, and search (streamable HTTP, manual OAuth)
+- [Applications Overview](https://docs.aigateway.cequence.ai/docs/applications/): Browse all enterprise application integrations
+
+### Business Operations
+- [HubSpot CRM](https://docs.aigateway.cequence.ai/docs/applications/business-operations/hubspot-crm): HubSpot customer relationship management
+- [NetSuite CRM](https://docs.aigateway.cequence.ai/docs/applications/business-operations/netsuite-crm): Oracle NetSuite CRM integration
+- [Salesforce Sales Cloud](https://docs.aigateway.cequence.ai/docs/applications/business-operations/salesforce-sales-cloud): Salesforce CRM integration
+
+### Collaboration & Productivity
+- [Confluence](https://docs.aigateway.cequence.ai/docs/applications/collaboration/confluence): Atlassian Confluence wiki integration
+- [Microsoft Teams](https://docs.aigateway.cequence.ai/docs/applications/collaboration/microsoft-365-teams): Microsoft Teams integration
+- [Slack](https://docs.aigateway.cequence.ai/docs/applications/collaboration/slack): Team communication integration
+
+### Customer Experience
+- [Freshdesk](https://docs.aigateway.cequence.ai/docs/applications/customer-experience/freshdesk): Customer support platform
+- [Jira Service Desk](https://docs.aigateway.cequence.ai/docs/applications/customer-experience/jira-service-desk): IT service management
+- [Zendesk Support](https://docs.aigateway.cequence.ai/docs/applications/customer-experience/zendesk-support): Zendesk ticketing system
+
+### Data Analytics & Business Intelligence
+- [BigQuery](https://docs.aigateway.cequence.ai/docs/applications/data-analytics/bigquery): Google BigQuery integration
+- [Databricks](https://docs.aigateway.cequence.ai/docs/applications/data-analytics/databricks): Databricks platform integration
+- [Snowflake](https://docs.aigateway.cequence.ai/docs/applications/data-analytics/snowflake): Snowflake MCP server integration with OAuth
+
+### Development & DevOps
+- [GitHub](https://docs.aigateway.cequence.ai/docs/applications/development-devops/github): Code repository and CI/CD integration
+- [GitLab](https://docs.aigateway.cequence.ai/docs/applications/development-devops/gitlab): DevOps platform integration
+- [Google Cloud Monitoring](https://docs.aigateway.cequence.ai/docs/applications/development-devops/gcp-monitoring): Metrics, alerting policies, incidents, and uptime checks
+- [Jira](https://docs.aigateway.cequence.ai/docs/applications/development-devops/jira): Atlassian Jira project tracking
+- [SonarQube](https://docs.aigateway.cequence.ai/docs/applications/development-devops/sonarqube): Code quality and static analysis (SonarQube Server & Cloud)
+### Security
+- [Snyk](https://docs.aigateway.cequence.ai/docs/applications/security/snyk): Security vulnerability scanning
+
+## Optional
+- [Complete Documentation Corpus](https://docs.aigateway.cequence.ai/llms-full.txt): Full generated docs context for long-form retrieval
+- [Main Sitemap](https://docs.aigateway.cequence.ai/sitemap.xml): Full crawlable URL inventory

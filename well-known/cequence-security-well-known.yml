@@ -1,0 +1,52 @@
+generated: '2026-08-02'
+method: probed
+source: live HTTP probes of every Cequence host
+found: false
+summary: >-
+  No /.well-known/ resource is served by any Cequence host. Two hosts (aigateway.cequence.ai and
+  docs.aigateway.cequence.ai) answer HTTP 200 with an SPA / docs HTML shell for EVERY path, including
+  paths that cannot exist — those are catch-all false positives, not published documents, and are
+  recorded as such. No `WellKnown` or `SecurityTxt` pointer is wired in apis.yml because nothing real
+  is published.
+probes:
+- host: www.cequence.ai
+  results:
+  - {path: /.well-known/security.txt, http_status: 404, file: null}
+  - {path: /.well-known/api-catalog, http_status: 404, file: null}
+  - {path: /.well-known/agent-card.json, http_status: 404, file: null}
+  - {path: /.well-known/agent.json, http_status: 404, file: null}
+- host: trust.cequence.ai
+  results:
+  - {path: /.well-known/security.txt, http_status: 403, file: null}
+- host: aigateway.cequence.ai
+  spa_catch_all: true
+  catch_all_evidence: >-
+    GET /, /pricing, /openapi.json and /zzznotarealpage all return 200 text/html with an identical
+    2641-byte body (the Vite SPA index). Any 200 on this host for a /.well-known/* path is therefore
+    meaningless.
+  results:
+  - {path: /.well-known/oauth-authorization-server, http_status: 200, content_type: text/html, verdict: spa-catch-all, file: null}
+  - {path: /.well-known/oauth-protected-resource, http_status: 200, content_type: text/html, verdict: spa-catch-all, file: null}
+  - {path: /.well-known/openid-configuration, http_status: 200, content_type: text/html, verdict: spa-catch-all, file: null}
+  - {path: /.well-known/agent-card.json, http_status: 200, content_type: text/html, verdict: spa-catch-all, file: null}
+- host: docs.aigateway.cequence.ai
+  spa_catch_all: true
+  results:
+  - {path: /.well-known/agent-card.json, http_status: 200, content_type: text/html, verdict: docs-shell, file: null}
+- host: api.aigateway.cequence.ai
+  results:
+  - {path: /, http_status: 404, content_type: application/json, file: null}
+  - {path: /openapi.json, http_status: 404, content_type: application/json, file: null}
+non_resolving_hosts:
+- docs.cequence.ai
+- developer.cequence.ai
+- api.cequence.ai
+- status.cequence.ai
+- portal.cequence.ai
+- uap.cequence.ai
+- app.cequence.ai
+- console.cequence.ai
+security_txt:
+  published: false
+  alternative: https://www.cequence.ai/responsible-disclosure-policy/ (security@cequence.ai)
+  see: security/cequence-security-vulnerability-disclosure.yml

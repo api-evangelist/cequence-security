@@ -1,0 +1,82 @@
+generated: '2026-08-02'
+method: searched
+source: https://registry.npmjs.org/@cequenceai/mcp-cli (README) + https://docs.aigateway.cequence.ai/docs/getstarted
+name: Cequence MCP CLI
+binary: cequence-mcp
+package: '@cequenceai/mcp-cli'
+version: 1.5.0
+license: MIT
+official: true
+description: >-
+  "A command-line tool by Cequence Security for easily setting up Cequence MCP (Model Context Protocol)
+  servers with AI clients like Cursor IDE, Claude AI, and Windsurf IDE."
+install:
+- method: npx
+  command: npx @cequenceai/mcp-cli@latest --help
+- method: npm global
+  command: npm install -g @cequenceai/mcp-cli
+requirements:
+  node: '>=18.0.0'
+  platforms: [macOS, Windows, Linux]
+commands:
+- name: cursor
+  group: client-setup
+  summary: Write a Cequence MCP server entry into the Cursor IDE MCP config.
+  example: npx @cequenceai/mcp-cli@latest cursor --url "https://your-cequence-gateway.com/mcp" --name "Cequence API Gateway"
+  flags: ['--url', '--name', '--api-key']
+- name: claude
+  group: client-setup
+  summary: Write a Cequence MCP server entry into the Claude AI MCP config.
+  example: npx @cequenceai/mcp-cli@latest claude --url "https://your-cequence-gateway.com/mcp" --name "Cequence API Gateway"
+  flags: ['--url', '--name', '--api-key']
+- name: windsurf
+  group: client-setup
+  summary: Write a Cequence MCP server entry into the Windsurf IDE MCP config.
+  example: npx @cequenceai/mcp-cli@latest windsurf --url "https://your-cequence-gateway.com/mcp" --name "Cequence API Gateway"
+  flags: ['--url', '--name', '--api-key']
+- name: list
+  group: client-setup
+  summary: List configured MCP servers.
+  example: npx @cequenceai/mcp-cli@latest list
+- name: introspect
+  group: onboarding
+  summary: >-
+    Act as an MCP client against an internally-hosted MCP server the Cequence control plane cannot
+    reach, perform the MCP handshake, list every tool, and write an upload bundle so the server
+    registers with its tools intact instead of 0 tools.
+  example: npx @cequenceai/mcp-cli@latest introspect --url "https://internal-mcp.corp.local/mcp" --auth oauth --scope "read"
+  flags:
+  - {flag: '--url, -u', required: true, description: remote MCP server URL}
+  - {flag: '--transport, -t', description: 'streamable-http (default) or sse'}
+  - {flag: '--auth, -a', description: 'none (default), bearer, api-key, basic, or oauth'}
+  - {flag: '--token', description: bearer token (with --auth bearer)}
+  - {flag: '--api-key / --header-name', description: 'API key and the header to carry it (default Authorization)'}
+  - {flag: '--basic-user / --basic-pass', description: credentials (with --auth basic)}
+  - {flag: '--scope / --callback-port', description: 'OAuth scope(s) and local redirect port (default 8765)'}
+  - {flag: '--header', description: 'extra "Name: Value" header, repeatable'}
+  - {flag: '--name, -n / --description, -d', description: catalog display name and description}
+  - {flag: '--primary-category / --family / --secondary', description: catalog categorization}
+  - {flag: '--out, -o', description: 'directory to write output into (default: current directory)'}
+  - {flag: '--format, -f', description: 'tgz (default, single .tar.gz bundle) or dir (loose files)'}
+  - {flag: '--timeout', description: per-request timeout in seconds}
+  - {flag: '--push', description: also upload the spec to the Cequence control plane}
+  - {flag: '--api-url / --tenant / --api-token', description: control-plane target, tenant and bearer token for --push}
+  - {flag: '--spec-id', description: re-introspect and refresh an existing catalog spec's tools in place}
+outputs:
+  default: '<out-dir>/<slug>.tar.gz — upload in the AI Gateway UI (add remote MCP server -> "Upload a spec (CLI)")'
+  contents: [create-spec.json, tools.json, manifest.json]
+  alt_format: '--format dir writes the three files loose into <out-dir>/<slug>/'
+caveats: >-
+  "introspect removes the tool-discovery blocker only. For cloud-hosted Cequence gateways, the
+  dataplane must still be able to reach the internal endpoint at runtime (network route / IP
+  allow-list)."
+related:
+  packages: packages/cequence-security-packages.yml
+  mcp: mcp/cequence-security-mcp.yml
+x-evidence:
+  fetched: '2026-08-02'
+  urls:
+  - url: https://registry.npmjs.org/@cequenceai/mcp-cli
+    http_status: 200
+  - url: https://docs.aigateway.cequence.ai/docs/getstarted
+    http_status: 200

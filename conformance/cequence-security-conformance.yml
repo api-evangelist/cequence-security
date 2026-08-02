@@ -1,0 +1,115 @@
+generated: '2026-08-02'
+method: searched
+source: >-
+  https://trust.cequence.ai/ + https://docs.aigateway.cequence.ai/docs/guides/multi-authentication +
+  https://docs.aigateway.cequence.ai/docs/guides/observability + live probes
+standards:
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: >-
+    Cequence operates a first-party hosted MCP server (streamable HTTP) provisioned per tenant, and the
+    AI Gateway's core function is publishing REST APIs and third-party servers as MCP endpoints. The
+    @cequenceai/mcp-cli package depends on @modelcontextprotocol/sdk.
+- id: oauth2
+  name: OAuth 2.0 / 2.1
+  conforms: true
+  evidence: >-
+    Documented inbound and outbound OAuth 2.1 authorization-code and client-credentials flows; the
+    first-party MCP server authenticates with an OAuth 2.0 authorization-code flow.
+- id: oauth2-pkce
+  name: PKCE (RFC 7636)
+  conforms: true
+  evidence: '"standard public-client PKCE flow" documented for the Cequence AI Gateway MCP server.'
+- id: oidc
+  name: OpenID Connect
+  conforms: true
+  evidence: >-
+    SSO for MCP servers documented against Microsoft Entra ID, Google Workspace, Okta and GitLab, with
+    SSO group claims mapped onto Teams.
+- id: rfc8414-authorization-server-metadata
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: false
+  evidence: >-
+    /.well-known/oauth-authorization-server on aigateway.cequence.ai returns the SPA HTML catch-all
+    (200 text/html, identical size to every other path), not RFC 8414 metadata.
+- id: rfc9728-protected-resource-metadata
+  name: OAuth 2.0 Protected Resource Metadata
+  conforms: false
+  evidence: /.well-known/oauth-protected-resource returns the same SPA HTML catch-all, not metadata.
+- id: rfc6750-bearer
+  name: OAuth 2.0 Bearer Token Usage
+  conforms: true
+  evidence: 'Documented bearer scheme "Authorization: Bearer <token>" for inbound and outbound auth.'
+- id: rfc7519-jwt
+  name: JSON Web Token
+  conforms: true
+  evidence: JWT Bearer authentication documented inbound (with gateway-side validation) and outbound.
+- id: openapi
+  name: OpenAPI Specification
+  conforms: true
+  evidence: >-
+    The API Registry ingests OpenAPI/Swagger specs (YAML/JSON, up to 25 MB) to generate MCP tools, and
+    UAP 9.0 publishes a versioned OpenAPI specification for the API Security component from inside the
+    product. No public OpenAPI document is served anonymously.
+- id: opentelemetry
+  name: OpenTelemetry / OTLP
+  conforms: true
+  evidence: Audit and tool-activity events export over "OpenTelemetry Protocol (gRPC or HTTP)".
+- id: rfc5424-syslog
+  name: Syslog
+  conforms: true
+  evidence: Audit export supports syslog over TCP, UDP or TLS.
+- id: rfc9457-problem-details
+  name: Problem Details for HTTP APIs
+  conforms: false
+  evidence: No application/problem+json envelope is documented; errors are HTTP status + message + audit reason.
+- id: rfc9116-security-txt
+  name: security.txt
+  conforms: false
+  evidence: >-
+    /.well-known/security.txt returns 404 on www.cequence.ai and 403 on trust.cequence.ai. A
+    human-readable responsible-disclosure policy is published instead.
+- id: rfc8594-sunset
+  name: Sunset / Deprecation HTTP headers
+  conforms: false
+  evidence: No deprecation or sunset policy or headers documented.
+- id: a2a
+  name: A2A Agent Card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json return 404 on www.cequence.ai; the
+    aigateway and docs hosts answer 200 with an SPA/docs HTML shell for every path, which is not a card.
+- id: graphql
+  name: GraphQL
+  conforms: false
+  evidence: No GraphQL endpoint documented or discovered on any Cequence host.
+- id: asyncapi
+  name: AsyncAPI
+  conforms: false
+  evidence: >-
+    No event specification is published. The event surface is SIEM export (Splunk HEC, Datadog, OTLP,
+    syslog); no webhook/callback surface is documented.
+compliance_certifications:
+  source: https://trust.cequence.ai/
+  see: security/cequence-security-trust-center.yml
+  entries:
+  - {id: soc2-type2, name: SOC 2 Type 2, year: '2025', conforms: true}
+  - {id: pci-dss-4-0-1, name: PCI DSS v4.0.1, year: '2025', conforms: true}
+  - {id: iso-27001-2022, name: 'ISO/IEC 27001:2022', year: '2026', conforms: true}
+  - {id: gdpr, name: GDPR, conforms: true, evidence: Stated adherence on the trust center and compliance page.}
+  - {id: ccpa, name: CCPA, conforms: true, evidence: Stated adherence on the trust center.}
+regulatory_alignment_claimed:
+- {regime: EU AI Act, reference: 'https://www.cequence.ai/eu-ai-act/'}
+- {regime: 'APPI (Japan)', reference: 'https://trust.cequence.ai/'}
+- {regime: 'PDPA and MAS TRM (Singapore)', reference: 'https://trust.cequence.ai/'}
+- {regime: 'POPIA (South Africa)', reference: 'https://trust.cequence.ai/'}
+- {regime: 'PCI DSS compliance solution', reference: 'https://www.cequence.ai/solutions/pci-dss-compliance/'}
+x-evidence:
+  fetched: '2026-08-02'
+  urls:
+  - {url: 'https://trust.cequence.ai/', http_status: 200}
+  - {url: 'https://www.cequence.ai/.well-known/agent-card.json', http_status: 404}
+  - {url: 'https://www.cequence.ai/.well-known/agent.json', http_status: 404}
+  - {url: 'https://www.cequence.ai/.well-known/security.txt', http_status: 404}
+  - {url: 'https://aigateway.cequence.ai/.well-known/oauth-authorization-server', http_status: 200, note: SPA HTML catch-all}

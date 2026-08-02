@@ -1,0 +1,105 @@
+generated: '2026-08-02'
+method: searched
+source: https://docs.aigateway.cequence.ai/docs/guides/multi-authentication
+docs:
+- https://docs.aigateway.cequence.ai/docs/guides/multi-authentication
+- https://docs.aigateway.cequence.ai/docs/sso-mcp
+- https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/cequence-ai-gateway
+summary: >-
+  Cequence AI Gateway is a two-sided authentication broker. Inbound ("agent authentication") governs how
+  an AI client proves identity to a gateway-published MCP server; outbound ("app authentication")
+  governs the credential the gateway injects when calling the upstream API or MCP server. Agents never
+  hold the upstream credential — "Agents never see your API keys or tokens. The gateway injects them on
+  the way out."
+inbound:
+  description: Agent -> Cequence AI Gateway
+  schemes:
+  - id: sso-interactive
+    type: openIdConnect
+    description: >-
+      "When a user connects, they'll see a familiar SSO login prompt in their browser." Intended for
+      team members using AI coding assistants such as Cursor or Claude Desktop.
+    identity_providers:
+    - {name: Microsoft Entra ID, docs: https://docs.aigateway.cequence.ai/docs/sso-mcp/microsoft-entra}
+    - {name: Microsoft Entra Proxy, docs: https://docs.aigateway.cequence.ai/docs/sso-mcp/microsoft-entra-proxy}
+    - {name: Google Workspace, docs: https://docs.aigateway.cequence.ai/docs/sso-mcp/google-workspace}
+    - {name: Okta, docs: https://docs.aigateway.cequence.ai/docs/sso-mcp/okta}
+    - {name: GitLab, docs: https://docs.aigateway.cequence.ai/docs/sso-mcp/gitlab-sso-configuration}
+    group_mapping: SSO groups map to Teams, which gate access to MCP servers and Agent Personas.
+  - id: passthrough
+    type: http
+    description: Forwards caller credentials as-is, optionally with JWT validation — "the gateway checks the token before forwarding the request."
+  - id: access-key
+    type: apiKey
+    description: Agent Personas support access-key authentication in addition to SSO.
+  - id: api-key
+    type: apiKey
+    description: API key inbound authentication is offered on registered APIs (API Registry).
+  - id: bearer
+    type: http
+    scheme: bearer
+  - id: basic
+    type: http
+    scheme: basic
+  - id: jwt-bearer
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+outbound:
+  description: Cequence AI Gateway -> upstream API / remote MCP server
+  schemes:
+  - id: oauth2-authorization
+    type: oauth2
+    flow: authorizationCode
+    version: OAuth 2.1
+    description: >-
+      "the most common setup for apps like Gmail, Google Drive, Slack, or GitLab" — user-consent
+      authorization-code flow.
+  - id: oauth2-client-credentials
+    type: oauth2
+    flow: clientCredentials
+    version: OAuth 2.1
+    description: Service accounts; the gateway holds a fixed credential set.
+    configuration: [token_url, client_id, client_secret, scopes]
+  - id: api-key
+    type: apiKey
+    in: [header, query]
+    configuration: [key_name, key_value, location]
+  - id: bearer
+    type: http
+    scheme: bearer
+    header: 'Authorization: Bearer <token>'
+  - id: jwt-bearer
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+    description: '"self-contained JWT (JSON Web Token) with embedded claims and a digital signature"'
+  - id: basic
+    type: http
+    scheme: basic
+  - id: passthrough
+    type: none
+    description: No added credential; the caller-provided authentication is forwarded unchanged.
+  additional_headers:
+    supported: true
+    kinds: [oauth2 service tokens, forwarded caller tokens, token exchange, stored API keys, caller identity headers, custom headers]
+first_party_mcp_server:
+  auth: OAuth 2.0 / OIDC, browser-based authorization-code flow with public-client PKCE
+  identity_provider: Descope
+  see: mcp/cequence-security-mcp.yml
+scopes:
+  provider_scope_registry_published: false
+  note: >-
+    Cequence does not publish an OAuth scope registry of its own — scopes configured in the gateway are
+    the UPSTREAM provider's scopes (e.g. the documented Atlassian OAuth scope guide at
+    /docs/guides/atlassian-oauth-scopes). No scopes/ artifact is emitted for that reason.
+enforcement_order: >-
+  Routing (404) -> Authentication (401) -> Authorization (403) -> Rate limiting (429) -> Security
+  interceptors, DLP and behavioral rules -> Upstream call (502/503).
+x-evidence:
+  fetched: '2026-08-02'
+  urls:
+  - url: https://docs.aigateway.cequence.ai/docs/guides/multi-authentication
+    http_status: 200
+  - url: https://docs.aigateway.cequence.ai/docs/guides/security-policies
+    http_status: 200
