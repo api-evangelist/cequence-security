@@ -65,7 +65,7 @@ apis:
     url: https://docs.aigateway.cequence.ai/docs/getstarted
   - type: MCPServer
     url: mcp/cequence-security-mcp.yml
-  - type: MCP
+  - type: Documentation
     url: https://docs.aigateway.cequence.ai/docs/remote-mcp-servers/cequence-ai-gateway
   - type: Authentication
     url: authentication/cequence-security-authentication.yml
