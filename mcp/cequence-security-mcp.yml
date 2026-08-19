@@ -6,68 +6,124 @@ llms_source: https://docs.aigateway.cequence.ai/llms.txt
 server:
   name: Cequence AI Gateway MCP
   vendor_first_party: true
-  description: >-
-    First-party, Cequence-hosted MCP server to manage the AI Gateway from any agent — create MCP
-    servers, agent personas, skills, and DLP policies. Provisioned automatically for every tenant.
+  description: First-party, Cequence-hosted MCP server to manage the AI Gateway from any agent — create
+    MCP servers, agent personas, skills, and DLP policies. Provisioned automatically for every tenant.
   transport: streamable-http
   url: null
-  url_note: >-
-    Per the docs, "Server URL: Shown on the server's details page in the UI - copy it from there to
-    connect your client." The endpoint is tenant-specific, so there is no single public MCP URL to
-    probe and tools/list could not be called anonymously.
+  url_note: 'Per the docs, "Server URL: Shown on the server''s details page in the UI - copy it from there
+    to connect your client." The endpoint is tenant-specific, so there is no single public MCP URL to
+    probe and tools/list could not be called anonymously.'
   provisioning: automatic per tenant
 auth:
-  methods: [oauth2]
+  methods:
+  - oauth2
   oauth2:
-    description: >-
-      OAuth 2.0 / OIDC — browser-based authorization-code flow against the AI Gateway account
+    description: OAuth 2.0 / OIDC — browser-based authorization-code flow against the AI Gateway account
       (identity provided by Descope), standard public-client PKCE flow.
-    grant_types: [authorization_code]
+    grant_types:
+    - authorization_code
     pkce: true
     identity_provider: Descope
   discovery:
-    oauth_authorization_server: not published anonymously (SPA catch-all returns HTML 200 for every /.well-known/* path on aigateway.cequence.ai)
+    oauth_authorization_server: not published anonymously (SPA catch-all returns HTML 200 for every /.well-known/*
+      path on aigateway.cequence.ai)
     oauth_protected_resource: not published anonymously (same SPA catch-all)
 tool_count: 25
-tools_source: >-
-  Tool names and descriptions captured verbatim from the provider's published documentation page.
-  inputSchema was NOT captured — the live endpoint is tenant-scoped and OAuth-gated, so authenticated
+tools_source: Tool names and descriptions captured verbatim from the provider's published documentation
+  page. inputSchema was NOT captured — the live endpoint is tenant-scoped and OAuth-gated, so authenticated
   MCP introspection (tools/list) is required to obtain real parameter schemas. Do not assume schemas.
 tools:
-- {name: list_third_party_apps, category: catalog, description: "Browse the Cequence-curated catalog of apps you can build an MCP server from"}
-- {name: get_third_party_app, category: catalog, description: "Fetch one catalog app's endpoints (API) or tools (MCP)"}
-- {name: list_api_specs, category: specs, description: "List the tenant's uploaded custom API specs"}
-- {name: get_api_spec, category: specs, description: "Fetch one API spec's endpoints"}
-- {name: list_mcp_specs, category: specs, description: "List the tenant's saved remote-MCP specs"}
-- {name: get_mcp_spec, category: specs, description: "Fetch one MCP spec's tool inventory"}
-- {name: list_mcp_servers, category: servers, description: "Discover deployed MCP servers (gateways) in the tenant"}
-- {name: list_tools_for_mcp_server, category: servers, description: "List a single MCP server's tool definitions"}
-- {name: list_apis, category: api_registry, description: "List registered REST APIs (the API Registry)"}
-- {name: get_api_registry, category: api_registry, description: "Fetch a registered API's operations"}
-- {name: list_pools, category: deployment, description: "List private deployment pools"}
-- {name: list_teams, category: access_control, description: "List teams (SSO-mapped user groups)"}
-- {name: list_skills, category: skills, description: "List registered skills"}
-- {name: get_skill, category: skills, description: "Fetch one skill's full content"}
-- {name: list_sdp_categories, category: dlp, description: "List standard sensitive-data-protection categories"}
-- {name: list_dlp_policies, category: dlp, description: "List DLP policies (optionally scoped to a persona)"}
-- {name: list_agent_personas, category: personas, description: "List agent personas"}
-- {name: get_agent_persona, category: personas, description: "Fetch one persona, including its connect URL"}
-- {name: query_tool_activity, category: observability, description: "Observability: logs, summary, facets, trends, log detail, and findings"}
-- {name: recommend_dlp_policy, category: dlp, description: "Recommend a DLP policy for a persona (deterministic)"}
-- {name: create_mcp_server, category: servers, description: "Create an MCP server from an API or remote-MCP spec"}
-- {name: create_agent_persona, category: personas, description: "Create an agent persona (supports dryRun validation)"}
-- {name: update_agent_persona, category: personas, description: "Apply partial edits to an existing persona"}
-- {name: create_skill, category: skills, description: "Create a reusable skill in the Skill Registry"}
-- {name: attach_dlp_policy, category: dlp, description: "Create and attach a DLP policy to an existing persona"}
+- name: list_third_party_apps
+  category: catalog
+  description: Browse the Cequence-curated catalog of apps you can build an MCP server from
+- name: get_third_party_app
+  category: catalog
+  description: Fetch one catalog app's endpoints (API) or tools (MCP)
+- name: list_api_specs
+  category: specs
+  description: List the tenant's uploaded custom API specs
+- name: get_api_spec
+  category: specs
+  description: Fetch one API spec's endpoints
+- name: list_mcp_specs
+  category: specs
+  description: List the tenant's saved remote-MCP specs
+- name: get_mcp_spec
+  category: specs
+  description: Fetch one MCP spec's tool inventory
+- name: list_mcp_servers
+  category: servers
+  description: Discover deployed MCP servers (gateways) in the tenant
+- name: list_tools_for_mcp_server
+  category: servers
+  description: List a single MCP server's tool definitions
+- name: list_apis
+  category: api_registry
+  description: List registered REST APIs (the API Registry)
+- name: get_api_registry
+  category: api_registry
+  description: Fetch a registered API's operations
+- name: list_pools
+  category: deployment
+  description: List private deployment pools
+- name: list_teams
+  category: access_control
+  description: List teams (SSO-mapped user groups)
+- name: list_skills
+  category: skills
+  description: List registered skills
+- name: get_skill
+  category: skills
+  description: Fetch one skill's full content
+- name: list_sdp_categories
+  category: dlp
+  description: List standard sensitive-data-protection categories
+- name: list_dlp_policies
+  category: dlp
+  description: List DLP policies (optionally scoped to a persona)
+- name: list_agent_personas
+  category: personas
+  description: List agent personas
+- name: get_agent_persona
+  category: personas
+  description: Fetch one persona, including its connect URL
+- name: query_tool_activity
+  category: observability
+  description: 'Observability: logs, summary, facets, trends, log detail, and findings'
+- name: recommend_dlp_policy
+  category: dlp
+  description: Recommend a DLP policy for a persona (deterministic)
+- name: create_mcp_server
+  category: servers
+  description: Create an MCP server from an API or remote-MCP spec
+- name: create_agent_persona
+  category: personas
+  description: Create an agent persona (supports dryRun validation)
+- name: update_agent_persona
+  category: personas
+  description: Apply partial edits to an existing persona
+- name: create_skill
+  category: skills
+  description: Create a reusable skill in the Skill Registry
+- name: attach_dlp_policy
+  category: dlp
+  description: Create and attach a DLP policy to an existing persona
 clients_documented:
-- {client: Claude Desktop, docs: https://docs.aigateway.cequence.ai/docs/client-config/claude-desktop}
-- {client: Claude Code, docs: https://docs.aigateway.cequence.ai/docs/client-config/claude-code}
-- {client: Cursor IDE, docs: https://docs.aigateway.cequence.ai/docs/client-config/cursor}
-- {client: VS Code, docs: https://docs.aigateway.cequence.ai/docs/client-config/vscode}
-- {client: Windsurf, docs: https://docs.aigateway.cequence.ai/docs/client-config/windsurf}
+- client: Claude Desktop
+  docs: https://docs.aigateway.cequence.ai/docs/client-config/claude-desktop
+- client: Claude Code
+  docs: https://docs.aigateway.cequence.ai/docs/client-config/claude-code
+- client: Cursor IDE
+  docs: https://docs.aigateway.cequence.ai/docs/client-config/cursor
+- client: VS Code
+  docs: https://docs.aigateway.cequence.ai/docs/client-config/vscode
+- client: Windsurf
+  docs: https://docs.aigateway.cequence.ai/docs/client-config/windsurf
 frameworks_documented:
-- {name: LangGraph, docs: https://docs.aigateway.cequence.ai/docs/ai-libraries/langgraph}
-- {name: CrewAI, docs: https://docs.aigateway.cequence.ai/docs/ai-libraries/crewai}
+- name: LangGraph
+  docs: https://docs.aigateway.cequence.ai/docs/ai-libraries/langgraph
+- name: CrewAI
+  docs: https://docs.aigateway.cequence.ai/docs/ai-libraries/crewai
 setup_cli:
   package: '@cequenceai/mcp-cli'
   see: cli/cequence-security-cli.yml
@@ -76,12 +132,10 @@ registry_listings:
     listed: false
     probe: https://registry.modelcontextprotocol.io/v0/servers?search=cequence
     result: 0 servers
-notes: >-
-  Cequence AI Gateway is itself an MCP *production* platform — it converts customer REST APIs and
-  third-party remote MCP servers into governed MCP endpoints. This artifact records only the
-  first-party MCP server Cequence operates for managing the gateway. The 60+ third-party remote MCP
-  servers documented under /docs/remote-mcp-servers/ belong to other vendors and are not Cequence
-  APIs.
+notes: Cequence AI Gateway is itself an MCP *production* platform — it converts customer REST APIs and
+  third-party remote MCP servers into governed MCP endpoints. This artifact records only the first-party
+  MCP server Cequence operates for managing the gateway. The 60+ third-party remote MCP servers documented
+  under /docs/remote-mcp-servers/ belong to other vendors and are not Cequence APIs.
 x-evidence:
   fetched: '2026-08-02'
   urls:
@@ -90,3 +144,9 @@ x-evidence:
   - url: https://docs.aigateway.cequence.ai/llms.txt
     http_status: 200
     content_type: text/plain
+deployment:
+  mode: remote
+  verified: searched
+  tools: 25
+  checked: '2026-08-12'
+  source: catalog MCP census
