@@ -35,17 +35,17 @@ specificationVersion: '0.23'
 created: '2026-08-02'
 modified: '2026-08-02'
 tags:
-- API Security
-- AI Gateway
+- api-security
+- ai-gateway
 - MCP
-- Agentic AI
-- Bot Management
-- API Discovery
-- API Governance
-- Fraud Detection
-- WAAP
+- agentic-ai
+- bot-management
+- api-discovery
+- api-governance
+- fraud-detection
+- waap
 - Cybersecurity
-- API Testing
+- api-testing
 - agent-native
 tags_raw:
 - api-security
@@ -74,11 +74,11 @@ apis:
   humanURL: https://docs.aigateway.cequence.ai/docs/introduction
   baseURL: https://aigateway.cequence.ai
   tags:
-  - AI Gateway
+  - ai-gateway
   - MCP
-  - Agentic AI
-  - API Security
-  - API Governance
+  - agentic-ai
+  - api-security
+  - api-governance
   - agent-native
   tags_raw:
   - ai-gateway
